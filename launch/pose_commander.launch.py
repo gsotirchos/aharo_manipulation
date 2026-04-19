@@ -21,7 +21,16 @@ def generate_launch_description():
         output="screen",
         parameters=[
             moveit_config.to_dict(),
-            {"planning_pipelines": {"pipeline_names": ["ompl"]}}
+            {"planning_pipelines": {"pipeline_names": ["ompl"]}},
+            {
+                "plan_request_params": {
+                    "planning_attempts": 1,
+                    "planning_pipeline": "ompl",
+                    "max_velocity_scaling_factor": 1.0,
+                    "max_acceleration_scaling_factor": 1.0,
+                    "planning_time": 2.0,
+                }
+            }
         ],
     )
 
