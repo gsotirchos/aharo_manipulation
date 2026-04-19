@@ -19,7 +19,10 @@ def generate_launch_description():
         executable="pose_commander",
         name="pose_commander",
         output="screen",
-        parameters=[moveit_config.to_dict()],
+        parameters=[
+            moveit_config.to_dict(),
+            {"planning_pipelines": {"pipeline_names": ["ompl"]}}
+        ],
     )
 
     return LaunchDescription([pose_commander_node])
