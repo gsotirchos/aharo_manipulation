@@ -7,11 +7,9 @@ from ament_index_python.packages import get_package_share_directory
 def generate_launch_description():
     moveit_config = (
         MoveItConfigsBuilder("xlerobot", package_name="aharo_moveit_config")
-        .robot_description(file_path=os.path.join(get_package_share_directory('xlerobot_description'), 'urdf', 'xlerobot.urdf.xacro'))
-        .robot_description_semantic(file_path="config/xlerobot.srdf")
         .trajectory_execution(file_path="config/moveit_controllers.yaml")
         .planning_pipelines(pipelines=["ompl"])
-        .kinematics(file_path="config/kinematics.yaml")
+        .robot_description_kinematics(file_path="config/kinematics.yaml")
         .joint_limits(file_path="config/joint_limits.yaml")
         .to_moveit_configs()
     )
@@ -19,6 +17,7 @@ def generate_launch_description():
     pose_commander_node = Node(
         package="aharo_manipulation",
         executable="pose_commander",
+        name="pose_commander",
         output="screen",
         parameters=[moveit_config.to_dict()],
     )
